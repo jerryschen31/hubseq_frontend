@@ -140,7 +140,7 @@ export default function ProductCategories() {
           </ImageIconButton>
         ))}
       </Box>
-      <Typography variant="h9" align="right" component="h9" color="#0C090A">
+      <Typography variant="h6" align="right" component="h6" color="#0C090A">
         <p>*under development</p>
       </Typography>
     </Container>

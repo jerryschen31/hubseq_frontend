@@ -11,7 +11,7 @@ import { Download as DownloadIcon } from '../../icons/download';
 import { ReportTable } from './report-table';
 import { getFileCall } from '../file/file_list_api_call';
 import * as path from 'path';
-import { useSession } from "next-auth/react";
+import { useSession } from "utils/mock-auth";
 
 // assumes that runs are in [HOMEDIR]/runs/[runid]/...
 export const RunDataFilesModal = ({runsSelected, runInfo, props}) => {

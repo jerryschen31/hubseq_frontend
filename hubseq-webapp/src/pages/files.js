@@ -8,7 +8,7 @@ import { FileListToolbar } from '../components/file/file-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { useState } from 'react';
 import { addTrailingSlash } from '../utils/jsutils';
-import { useSession } from "next-auth/react"
+import { useSession } from "utils/mock-auth"
 
 const Files = () => {
   const [filesSelected, setFilesSelected] = useState([]);

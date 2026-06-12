@@ -1,119 +1,27 @@
 //
-// Functions for interfacing with AWS
-// to consolidate session-specific functions into one file
+// Backend API client.
 //
-import * as awsApiGatewayClient from "aws-api-gateway-client";
+// Originally this module called AWS API Gateway via `aws-api-gateway-client`.
+// For the local demo it instead talks to the in-app mock backend at
+// `/api/pipeline` (see src/pages/api/pipeline.js). The function signatures and
+// the returned shape (`{ data }`) are unchanged, so none of the calling code
+// (the various *-api-call.js helpers) had to change.
+//
+import axios from 'axios';
 
-export const awsPipelineAPI_POST = function(body, pathTemplate, idToken, ...rest){
-  let apigClientFactory = awsApiGatewayClient.default;
-  let apigClient = apigClientFactory.newClient({
-    invokeUrl: process.env.NEXT_PUBLIC_PIPELINE_API_URL,
-    region: "us-west-2",
-  });
+const PIPELINE_API = '/api/pipeline';
 
-  let pathParams = {};
-  // let pathTemplate = '/test_cors/batchpipeline';
-  let method = 'POST';
-  let additionalParams = {
-    headers: {
-      'Authorization': idToken,
-      'Content-Type': 'application/json'
-    },
-  };
-
-  // this looks messy - maybe need to clean up this code
-  return new Promise(function(resolve, reject){
-    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
-    .then(function(result){
-      resolve(result);
-    }).catch( function(err){
-      reject(err);
-    });
-  });
+// POST a body to a backend "pathTemplate" (e.g. '/test_cors/listobjects').
+// `idToken` is accepted for signature-compatibility but is unused in the demo.
+export const awsPipelineAPI_POST = function (body, pathTemplate, idToken, ...rest) {
+  return axios
+    .post(PIPELINE_API, { path: pathTemplate, body })
+    .then((res) => ({ data: res.data.data }));
 };
 
-export const awsPipelineAPI_GET = function( pathTemplate, idToken, ...rest){
-  let apigClientFactory = awsApiGatewayClient.default;
-  let apigClient = apigClientFactory.newClient({
-    invokeUrl: process.env.NEXT_PUBLIC_PIPELINE_API_URL,
-    region: "us-west-2",
-  });
-
-  let pathParams = {};
-  let method = 'GET';
-  let additionalParams = {
-    headers: {
-      'Authorization': idToken,
-      'Content-Type': 'application/json',
-      'Accept': '*/*'
-    },
-  };
-
-  // this looks messy - maybe need to clean up this code
-  return new Promise(function(resolve, reject){
-    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
-    .then(function(result){
-      resolve(result);
-    }).catch( function(err){
-      reject(err);
-    });
-  });
+// GET a backend "pathTemplate" (e.g. '/test_cors/getteamid').
+export const awsPipelineAPI_GET = function (pathTemplate, idToken, ...rest) {
+  return axios
+    .get(PIPELINE_API, { params: { path: pathTemplate } })
+    .then((res) => ({ data: res.data.data }));
 };
-
-/*
-export const awsS3API_GET = function( pathTemplate, idToken, ...rest){
-  let apigClientFactory = awsApiGatewayClient.default;
-  let apigClient = apigClientFactory.newClient({
-    invokeUrl: process.env.S3_API_URL,
-    region: "us-west-2",
-  });
-
-  let pathParams = {};
-  let method = 'GET';
-  let additionalParams = {
-    headers: {
-      'Authorization': idToken,
-      'Content-Type': 'application/octet-stream',
-      'Accept': '/'
-    },
-  };
-
-  // this looks messy - maybe need to clean up this code
-  return new Promise(function(resolve, reject){
-    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams)
-    .then(function(result){
-      resolve(result);
-    }).catch( function(err){
-      reject(err);
-    });
-  });
-};
-
-export const awsS3API_PUT = function( pathTemplate, body, idToken, ...rest){
-  let apigClientFactory = awsApiGatewayClient.default;
-  let apigClient = apigClientFactory.newClient({
-    invokeUrl: process.env.S3_API_URL,
-    region: "us-west-2",
-  });
-
-  let pathParams = {};
-  let method = 'PUT';
-  let additionalParams = {
-    headers: {
-      'Authorization': idToken,
-      'Content-Type': 'multipart/form-data',
-      'Accept': ''
-    },
-  };
-
-  // this looks messy - maybe need to clean up this code
-  return new Promise(function(resolve, reject){
-    apigClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
-    .then(function(result){
-      resolve(result);
-    }).catch( function(err){
-      reject(err);
-    });
-  });
-};
-*/

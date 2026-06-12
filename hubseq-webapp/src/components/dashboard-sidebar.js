@@ -14,7 +14,7 @@ import { Selector as SelectorIcon } from '../icons/selector';
 import { User as UserIcon } from '../icons/user';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Menu as MenuIcon } from '../icons/menu';
-import { useSession } from "next-auth/react";
+import { useSession } from "utils/mock-auth";
 import { useState } from 'react';
 import { awsPipelineAPI_GET } from '../utils/aws-session';
 // import { Logo } from './logo';

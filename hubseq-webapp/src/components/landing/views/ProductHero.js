@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
-import { signIn } from "next-auth/react";
+import { signIn } from "utils/mock-auth";
 
 const backgroundImage =
     "/static/hubseq-blue-splash-background.png"

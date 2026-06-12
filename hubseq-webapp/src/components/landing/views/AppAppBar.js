@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 import AppBar from '../components/AppBar';
 import Toolbar from '../components/Toolbar';
 import Image from 'next/image';
-import { signIn } from "next-auth/react"
+import { signIn } from "utils/mock-auth"
 
 const rightLink = {
   fontSize: 16,

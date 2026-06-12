@@ -11,7 +11,6 @@ import { fileDownloadCall } from './file-download-api-call';
 import * as path from 'path';
 // import { showSaveFilePicker } from 'native-file-system-adapter';
 // import * as streamSaver from 'streamsaver';
-import { formatUrl } from "@aws-sdk/util-format-url";
 import { awsPipelineAPI_GET } from '../../utils/aws-session';
 
 export const FileDownloadModal = ({currentPath, selectedFiles, session, ...rest}) => {

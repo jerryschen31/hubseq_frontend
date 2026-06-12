@@ -11,7 +11,7 @@ import { Search as SearchIcon } from '../../icons/search';
 import { ReportTable } from './report-table';
 import { getFileCall } from '../file/file_list_api_call';
 import * as path from 'path';
-import { useSession } from "next-auth/react";
+import { useSession } from "utils/mock-auth";
 
 // assumes that runs are in [HOMEDIR]/runs/[runid]/...
 export const RunReportModal = ({runsSelected, runInfo, props}) => {

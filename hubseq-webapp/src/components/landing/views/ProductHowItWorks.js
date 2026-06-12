@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
-import { signIn } from "next-auth/react"
+import { signIn } from "utils/mock-auth"
 
 const item = {
   display: 'flex',
@@ -62,10 +62,10 @@ function ProductHowItWorks() {
                 <Typography variant="h6" align="center" sx={{ mb: 2 }}>
                 <p>per lab</p>
                 </Typography>
-                <Typography variant="h7" align="center" sx={{ mb: 1 }}>
+                <Typography variant="h6" align="center" sx={{ mb: 1 }}>
                   <p>5 TB data storage</p>
                 </Typography>
-                <Typography variant="h7" align="center">
+                <Typography variant="h6" align="center">
                   <p>Up to 10 active users</p>
                   <p>Bioinformatics workflows for all standard assays</p>
                   <p>Integration with one sequencer</p>
@@ -89,10 +89,10 @@ function ProductHowItWorks() {
                 <Typography variant="h6" align="center" sx={{ mb: 2 }}>
                 <p>per lab</p>
                 </Typography>
-                <Typography variant="h7" align="center" sx={{ mb: 1 }}>
+                <Typography variant="h6" align="center" sx={{ mb: 1 }}>
                   <p>20 TB data storage</p>
                 </Typography>
-                <Typography variant="h7" align="center">
+                <Typography variant="h6" align="center">
                   <p>Up to 50 active users</p>
                   <p>Unlimited guest users</p>
                   <p>Bioinformatics workflows for all standard assays</p>

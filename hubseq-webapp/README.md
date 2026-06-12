@@ -1,34 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# HubSeq Web App — Local Demo
 
-## Getting Started
+HubSeq is a platform for managing lab sequencing data: browse your data in a
+cloud bucket, attach metadata, and run bioinformatics pipelines (RNA-seq,
+ChIP-seq, single-cell, …) without managing any infrastructure.
 
-First, run the development server:
+This branch is a **fully self-contained demo**. The original app depended on AWS
+(Cognito for auth, API Gateway + Lambda for the backend, S3 for storage, AWS
+Batch for compute) hosted behind Vercel. None of that is running anymore, so the
+backend has been replaced with an **in-app mock** that runs entirely on
+`localhost`. No AWS account, credentials, or network access required.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. Click **Get Started** (or **Login** — there is no
+real authentication in the demo) to enter the app.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## What works
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- **Landing page** — the marketing site.
+- **File Explorer** (`/files`) — browses a mock S3 bucket. Navigate folders,
+  search, select files, upload, and download (files stream real mock contents).
+- **Runs** (`/runs`) — lists pipeline runs with status; open a run for its jobs
+  and result files.
+- **Run a pipeline / module** — select FASTQ/data files in the explorer and
+  launch a pipeline. Each module "executes" and produces output files that then
+  appear in the explorer under `runs/<run-id>/...`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## How the mock backend works
 
-## Learn More
+Everything that used to call AWS now calls local Next.js API routes:
 
-To learn more about Next.js, take a look at the following resources:
+| Concern | Production (old) | Demo (now) |
+|---|---|---|
+| Auth | AWS Cognito | [`src/utils/mock-auth.js`](src/utils/mock-auth.js) — a static demo session, no login |
+| Backend API | API Gateway + Lambda | [`src/pages/api/pipeline.js`](src/pages/api/pipeline.js) → [`src/server/mock-backend.js`](src/server/mock-backend.js) |
+| Storage (S3) | S3 buckets | [`src/pages/api/file.js`](src/pages/api/file.js) + an in-memory store ([`src/server/mock-store.js`](src/server/mock-store.js)) |
+| Compute | AWS Batch | shell scripts in [`mock-modules/`](mock-modules/) invoked by the mock backend |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The frontend data layer ([`src/utils/aws-session.js`](src/utils/aws-session.js)
+and the `*-api-call.js` helpers) kept its original function signatures, so only
+the transport changed — the UI is untouched.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Mock state (uploaded files, new pipeline runs) lives for the lifetime of the dev
+server process. Restart `npm run dev` to reset to the seed data.
 
-## Deploy on Vercel
+### Mock pipeline modules
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Each pipeline module (fastqc, bwa/rnastar, deseq2, david_go, …) is mocked by
+[`mock-modules/run-module.sh`](mock-modules/run-module.sh), which takes a module
+name + input + output and emits a small mock result. The backend captures that
+output as a virtual S3 object, so pipeline outputs are browsable in the explorer.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Tests
+
+```bash
+npm test
+```
+
+- `tests/mock-backend.test.js` — backend: S3 listing, tables, metadata, and
+  running modules/pipelines (Node environment).
+- `tests/file-list-results.test.js` — the File Explorer table renders mock data.
+- `tests/mock-auth.test.js` — the demo session shim.
+
+## Notable fix
+
+The app previously rendered a **blank white screen**. Root cause: `_app.js`
+wrapped the whole tree in `LocalizationProvider` imported from `@mui/lab`, whose
+installed version is a deprecation stub that renders `null` — silently swallowing
+the entire application. No date pickers were used, so it was removed.

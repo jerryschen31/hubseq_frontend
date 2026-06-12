@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { AppBar, Button, Box, Toolbar } from '@mui/material';
 import Image from 'next/image';
-import { signIn } from "next-auth/react"
+import { signIn } from "utils/mock-auth"
 
 const LandingNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,

@@ -8,7 +8,7 @@ import { DashboardLayout } from '../components/dashboard-layout';
 import { getRunsCall } from '../components/run/run-list-api-call';
 import { useState } from 'react';
 // import { runs } from '../__mocks__/runs';
-import { useSession } from "next-auth/react";
+import { useSession } from "utils/mock-auth";
 
 const Runs = () => {
   const [runsSelected, setRunsSelected] = useState([]);

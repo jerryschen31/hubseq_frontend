@@ -11,7 +11,7 @@ import { Cog as CogIcon } from '../../icons/cog';
 // import JobList from './job-list-api-call';
 import { jobsCall } from './job-list-api-call';
 import { JobListResults } from './job-list-results';
-import { useSession } from "next-auth/react";
+import { useSession } from "utils/mock-auth";
 
 export const RunDetailsModal = ({runsSelected, runInfo, props}) => {
     const [open, setOpen] = useState(false);

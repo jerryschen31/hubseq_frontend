@@ -7,8 +7,8 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { Bell as BellIcon } from '../icons/bell';
 import { UserCircle as UserCircleIcon } from '../icons/user-circle';
-import { signOut } from "next-auth/react"
-import { useSession } from "next-auth/react"
+import { signOut } from "utils/mock-auth"
+import { useSession } from "utils/mock-auth"
 
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({

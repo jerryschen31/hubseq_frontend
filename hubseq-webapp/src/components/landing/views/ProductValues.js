@@ -35,7 +35,7 @@ function ProductValues() {
               <Typography variant="h5" color="#0C090A" align="center" sx={{ my: 5 }}>
                 Automated QC
               </Typography>
-              <Typography variant="h7" color="#0C090A" align="center">
+              <Typography variant="h6" color="#0C090A" align="center">
                 {
                   'HubSeq automates the quality control processing of all sequencing samples'
                 }
@@ -57,7 +57,7 @@ function ProductValues() {
               <Typography variant="h5" color="#0C090A" align="center" sx={{ my: 5 }}>
                 Bioinformatics Pipelines
               </Typography>
-              <Typography variant="h7" color="#0C090A" align="center">
+              <Typography variant="h6" color="#0C090A" align="center">
                 {
                   'HubSeq provides end-to-end processing pipelines for all of the common sequencing assays'
                 }
@@ -79,7 +79,7 @@ function ProductValues() {
               <Typography variant="h5" color="#0C090A" align="center" sx={{ my: 5 }}>
                 Detailed Reports
               </Typography>
-              <Typography variant="h7" color="#0C090A" align="center">
+              <Typography variant="h6" color="#0C090A" align="center">
                 {
                   'HubSeq provides automated reports and visualizations of results for common sequencing assays'
                 }
@@ -101,7 +101,7 @@ function ProductValues() {
               <Typography variant="h5" color="#0C090A" align="center" sx={{ my: 5 }}>
                 Secure Data Backup
               </Typography>
-              <Typography variant="h7" color="#0C090A" align="center">
+              <Typography variant="h6" color="#0C090A" align="center">
                 {
                   'Full secure backup of all data files and results'
                 }
